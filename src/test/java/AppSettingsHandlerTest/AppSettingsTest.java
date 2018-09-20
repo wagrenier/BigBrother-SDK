@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
  * This class is simply to create a dummy test and set an example for other members
  */
 
-@DisplayName("Tests for the AppSettingHandler Package")
+@DisplayName("Tests for the AppSettingsHandler Package")
 public class AppSettingsTest {
   @BeforeAll
   static void beforeAll(){
