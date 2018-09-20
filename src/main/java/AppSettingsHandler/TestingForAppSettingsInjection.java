@@ -9,7 +9,8 @@ public class TestingForAppSettingsInjection {
     Injector injector = Guice.createInjector(new AppSettingsBindings());
 
     ClassThatDependsOnAppSettings abc = injector.getInstance(ClassThatDependsOnAppSettings.class);
-    abc.getAValue("A TEST");
+    System.out.println(abc.getAValue("fileName"));
+    System.out.println(abc.getAValue("intTest"));
   }
 
 }

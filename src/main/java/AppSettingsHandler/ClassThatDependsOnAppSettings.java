@@ -10,8 +10,8 @@ public class ClassThatDependsOnAppSettings {
     this.appSettings = appSettings;
   }
 
-  public void getAValue(String key){
-    appSettings.getValue(key);
+  public Object getAValue(String key){
+    return appSettings.getValue(key);
   }
 
 }

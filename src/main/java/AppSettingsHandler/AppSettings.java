@@ -1,13 +1,18 @@
 package AppSettingsHandler;
 
+import AppSettingsHandler.FileReader.JsonReader;
+import com.google.inject.Inject;
 import org.json.simple.JSONObject;
 
 public class AppSettings implements IAppSettings {
-  JSONObject appSetting;
+  private JSONObject appSetting;
+  private JsonReader jsonReader;
+  private String fullPath;
 
-  // Add that fileReader is injected here
-  public AppSettings(){
-
+  @Inject
+  public AppSettings(JsonReader jsonReader){
+    this.jsonReader = jsonReader;
+    this.fullPath = jsonReader.findFile(getFileName());
   }
 
   @Override
@@ -17,7 +22,10 @@ public class AppSettings implements IAppSettings {
 
   @Override
   public Object getValue(String key) {
-    System.out.println(key);
-    return null;
+    if(appSetting == null){
+      appSetting = jsonReader.openFile(fullPath);
+    }
+
+    return appSetting.get(key);
   }
 }
