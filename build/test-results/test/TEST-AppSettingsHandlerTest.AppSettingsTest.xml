@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AppSettingsHandlerTest.AppSettingsTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2018-09-20T15:55:40" hostname="DESKTOP-BUEP4FB" time="0.012">
+  <properties/>
+  <testcase name="firstTest()" classname="AppSettingsHandlerTest.AppSettingsTest" time="0.011"/>
+  <testcase name="secondTest()" classname="AppSettingsHandlerTest.AppSettingsTest" time="0.0"/>
+  <system-out><![CDATA[Before all test methods
+Before each test methods
+First test method
+After each test method
+Before each test methods
+Second test method
+After each test method
+After all test methods
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

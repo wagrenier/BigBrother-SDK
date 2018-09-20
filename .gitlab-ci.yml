@@ -1,0 +1,16 @@
+image: gradle:4.10.0-jdk8
+
+stages:
+- build
+- test
+
+build:
+  stage: build
+  script:
+  - gradle compileJava
+  - gradle compileTestJava
+
+test:
+  stage: test
+  script:
+  - gradle clean CompileTestJava test
