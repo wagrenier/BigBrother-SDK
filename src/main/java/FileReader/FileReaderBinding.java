@@ -1,4 +1,4 @@
-package AppSettingsHandler.FileReader;
+package FileReader;
 
 import com.google.inject.AbstractModule;
 

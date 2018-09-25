@@ -1,5 +1,8 @@
 package AppSettingsHandler;
 
+import com.google.inject.ImplementedBy;
+
+@ImplementedBy(AppSettings.class)
 public interface IAppSettings {
   public String getFileName();
 
