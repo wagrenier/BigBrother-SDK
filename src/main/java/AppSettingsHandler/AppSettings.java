@@ -2,8 +2,10 @@ package AppSettingsHandler;
 
 import FileReader.IFileReader;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import java.util.Map;
 
+@Singleton
 public class AppSettings implements IAppSettings {
   private Map appSetting;
   private IFileReader fileReader;
