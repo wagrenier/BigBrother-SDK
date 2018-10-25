@@ -35,18 +35,22 @@ public class POSTGRESQLDatabaseConnection implements IDatabaseConnection {
   }
 
   @Override
-  public void testConnection() {
+  public String testConnection() {
+    String queryReturn = "";
+
     try {
       Statement st = connectionDataBase.createStatement();
       ResultSet rs = st.executeQuery("SELECT * from utilisateur");
 
       while(rs.next()){
-        System.out.println(rs.getString(1) + " / " + rs.getString(3) + " " + rs.getString(2));
+        queryReturn += rs.getString(1) + " / " + rs.getString(3) + " " + rs.getString(2);
       }
 
     } catch (SQLException ex) {
       System.out.println(ex.toString());
     }
+
+    return queryReturn;
   }
 
   @Override
