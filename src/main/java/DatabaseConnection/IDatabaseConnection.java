@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 public interface IDatabaseConnection {
   void establishConnection() throws SQLException;
-  void testConnection();
+  String testConnection();
   Object getServerObject();
   boolean addDataObject(Object objectToAdd, String tableName);
   boolean removeServerObject(Object objectToRemove, String tableName);
