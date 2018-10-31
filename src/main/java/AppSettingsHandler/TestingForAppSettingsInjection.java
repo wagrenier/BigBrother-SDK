@@ -8,10 +8,8 @@ public class TestingForAppSettingsInjection {
 
   public static void main(String[] args){
     Injector injector = Guice.createInjector(new AppSettingsBindings());
-
     POSTGRESQLDatabaseConnection db = injector.getInstance(POSTGRESQLDatabaseConnection.class);
-    db.establishConnection();
-    db.testConnection();
+    System.out.println(db.getServerObject("*", "utilisateur"));
   }
 
 }

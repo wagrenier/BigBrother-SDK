@@ -5,13 +5,13 @@ import com.google.inject.Inject;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class POSTGRESQLDatabaseConnection implements IDatabaseConnection {
+public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
 
   protected AppSettings appSettings;
-
   private String url;
   private String username;
   private String password;
@@ -23,10 +23,15 @@ public class POSTGRESQLDatabaseConnection implements IDatabaseConnection {
     this.url = (String) this.appSettings.getValue("url");
     this.username = (String) this.appSettings.getValue("username");
     this.password = (String) this.appSettings.getValue("password");
+    this.establishConnection();
   }
 
   @Override
   public void establishConnection() {
+    if(connectionDataBase != null){
+      return ;
+    }
+
     try {
       this.connectionDataBase = DriverManager.getConnection(this.url, this.username, this.password);
     }catch (SQLException ex){
@@ -35,27 +40,42 @@ public class POSTGRESQLDatabaseConnection implements IDatabaseConnection {
   }
 
   @Override
-  public String testConnection() {
-    String queryReturn = "";
-
+  public Object getServerObject(String fieldToSelect, String tableName) {
+    StringBuilder queryReturn = new StringBuilder();
     try {
       Statement st = connectionDataBase.createStatement();
-      ResultSet rs = st.executeQuery("SELECT * from utilisateur");
+      ResultSet rs = st.executeQuery("SELECT " + fieldToSelect + " from " + tableName);
 
-      while(rs.next()){
-        queryReturn += rs.getString(1) + " / " + rs.getString(3) + " " + rs.getString(2);
+      if(rs != null){
+        ResultSetMetaData rsmd = rs.getMetaData();
+        int columnsNumber = rsmd.getColumnCount();
+
+        while(rs.next()){
+          queryReturn.append("{");
+          for(int i = 1; i <= columnsNumber; i++){
+            queryReturn.append("\"");
+            queryReturn.append(rsmd.getColumnName(i));
+            queryReturn.append("\"");
+            queryReturn.append(": ");
+            queryReturn.append("\"");
+            queryReturn.append(rs.getString(i));
+            queryReturn.append("\"");
+
+            if(i < columnsNumber){
+              queryReturn.append(", ");
+            }
+            else{
+              queryReturn.append("},");
+              queryReturn.append("\n");
+            }
+          }
+        }
       }
-
     } catch (SQLException ex) {
       System.out.println(ex.toString());
     }
 
-    return queryReturn;
-  }
-
-  @Override
-  public Object getServerObject() {
-    return null;
+    return queryReturn.toString();
   }
 
   @Override
