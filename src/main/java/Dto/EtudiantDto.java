@@ -12,7 +12,7 @@ public class EtudiantDto {
 
     // Constructeur
     public EtudiantDto(String cip_etudiant, int cote_r, String nom, String prenom,
-                        int profil_id, String programme, String trimestre_id, String unit_id) {
+                        string profil_id, String programme, String trimestre_id, String unit_id) {
         this.cip_etudiant = cip_etudiant;
         this.cote_r = cote_r;
         this.nom = nom;
