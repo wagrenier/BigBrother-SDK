@@ -5,7 +5,7 @@ public class EtudiantDto {
     public int cote_r;
     public String nom;
     public String prenom;
-    public int profil_id;
+    public String profil_id;
     public String programme;
     public String trimestre_id;
     public String unit_id;
