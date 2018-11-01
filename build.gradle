@@ -37,6 +37,7 @@ dependencies {
     )
 }
 
+task run(dependsOn: 'build', type: JavaExec) {
     main = 'AppSettingsHandler.TestingForAppSettingsInjection'
     classpath = sourceSets.main.runtimeClasspath
 }
