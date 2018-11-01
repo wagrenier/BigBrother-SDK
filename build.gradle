@@ -1,5 +1,14 @@
-plugins {
-    id 'java'
+apply plugin: 'java'
+apply plugin: 'org.javalite.activejdbc'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'http://repo.javalite.io' }
+    }
+    dependencies {
+        classpath group: 'org.javalite', name: 'activejdbc-gradle-plugin', version: '2.2'
+    }
 }
 
 group 'BigBrother-SDK'
@@ -9,12 +18,14 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven { url 'http://repo.javalite.io' }
 }
 test {
     useJUnitPlatform()
 }
 
 dependencies {
+    compile group: 'org.javalite', name: 'activejdbc', version: '2.2'
     compile group: 'postgresql', name: 'postgresql', version: '9.0-801.jdbc4'
     implementation group: 'com.google.inject', name: 'guice', version: '4.2.0'
     implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
@@ -24,4 +35,8 @@ dependencies {
     testRuntime(
             'org.junit.jupiter:junit-jupiter-engine:5.3.0'
     )
+}
+
+    main = 'AppSettingsHandler.TestingForAppSettingsInjection'
+    classpath = sourceSets.main.runtimeClasspath
 }

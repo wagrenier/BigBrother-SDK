@@ -2,12 +2,10 @@ package DatabaseConnection;
 
 import AppSettingsHandler.AppSettings;
 import com.google.inject.Inject;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
+import org.javalite.activejdbc.Base;
+import org.javalite.activejdbc.Model;
 
 public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
 
@@ -15,7 +13,7 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
   private String url;
   private String username;
   private String password;
-  protected Connection connectionDataBase;
+  private String dbDriver;
 
   @Inject
   public POSTGRESQLDatabaseConnection(AppSettings appSettings){
@@ -23,59 +21,61 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
     this.url = (String) this.appSettings.getValue("url");
     this.username = (String) this.appSettings.getValue("username");
     this.password = (String) this.appSettings.getValue("password");
+    this.dbDriver = (String) this.appSettings.getValue("dbDriver");
     this.establishConnection();
   }
 
   @Override
-  public void establishConnection() {
-    if(connectionDataBase != null){
-      return ;
-    }
-
-    try {
-      this.connectionDataBase = DriverManager.getConnection(this.url, this.username, this.password);
-    }catch (SQLException ex){
-      System.out.println(ex.toString());
-    }
+  public void finalize(){
+    this.closeConnection();
   }
 
   @Override
-  public Object getServerObject(String fieldToSelect, String tableName) {
-    StringBuilder queryReturn = new StringBuilder();
+  public void establishConnection() {
+    Base.open(this.dbDriver, this.url, this.username, this.password);
+  }
+
+  @Override
+  public void closeConnection(){
+    Base.close();
+  }
+
+  @Override
+  public List<Model> getServerObject(Class<? extends Model> model) {
+    List<Model> queryReturnValue = null;
+
     try {
-      Statement st = connectionDataBase.createStatement();
-      ResultSet rs = st.executeQuery("SELECT " + fieldToSelect + " from " + tableName);
-
-      if(rs != null){
-        ResultSetMetaData rsmd = rs.getMetaData();
-        int columnsNumber = rsmd.getColumnCount();
-
-        while(rs.next()){
-          queryReturn.append("{");
-          for(int i = 1; i <= columnsNumber; i++){
-            queryReturn.append("\"");
-            queryReturn.append(rsmd.getColumnName(i));
-            queryReturn.append("\"");
-            queryReturn.append(": ");
-            queryReturn.append("\"");
-            queryReturn.append(rs.getString(i));
-            queryReturn.append("\"");
-
-            if(i < columnsNumber){
-              queryReturn.append(", ");
-            }
-            else{
-              queryReturn.append("},");
-              queryReturn.append("\n");
-            }
-          }
-        }
-      }
-    } catch (SQLException ex) {
-      System.out.println(ex.toString());
+      queryReturnValue = (List<Model>) model.getMethod("findAll").invoke(null);
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+    } catch (NoSuchMethodException e) {
+      e.printStackTrace();
     }
 
-    return queryReturn.toString();
+
+    return queryReturnValue;
+  }
+
+  @Override
+  public List<Model> getServerObject(Class<? extends Model> model, String queryStatement, Object... searchParameters) {
+    if(searchParameters == null || queryStatement == null){
+      return this.getServerObject(model);
+    }
+    List<Model> queryReturnValue = null;
+
+    try {
+      queryReturnValue = (List<Model>) model.getMethod("where", queryStatement.getClass(), searchParameters.getClass()).invoke(null, queryStatement, searchParameters);
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+    } catch (NoSuchMethodException e) {
+      e.printStackTrace();
+    }
+
+    return queryReturnValue;
   }
 
   @Override

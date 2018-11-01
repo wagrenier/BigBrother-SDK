@@ -1,9 +1,11 @@
 package DatabaseConnection;
 
-import java.sql.SQLException;
+import java.util.List;
+import org.javalite.activejdbc.Model;
 
 public interface IDatabaseConnection {
-  Object getServerObject(String fieldToSelect, String tableName);
+  List<Model> getServerObject(Class<? extends Model> model, String queryStatement, Object... searchParameters);
+  List<Model> getServerObject(Class<? extends Model> model);
   boolean addDataObject(Object objectToAdd, String tableName);
   boolean removeServerObject(Object objectToRemove, String tableName);
 }
