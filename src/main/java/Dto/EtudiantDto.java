@@ -23,4 +23,36 @@ public class EtudiantDto {
         this.unit_id = unit_id;
     }
     public EtudiantDto(){ }
+
+    public String getCip_etudiant(){
+        return this.cip_etudiant;
+    }
+
+    public int getCote_r(){
+        return this.cote_r;
+    }
+
+    public String getNom(){
+        return this.nom;
+    }
+
+    public String getPrenom(){
+        return this.prenom;
+    }
+
+    public String getProfil_id(){
+        return this.profil_id;
+    }
+
+    public String getProgramme(){
+        return this.programme;
+    }
+    
+    public String getTrimestre_id(){
+        return this.trimestre_id;
+    }
+
+    public String getUnit_id(){
+        return this.unit_id;
+    }
 }
