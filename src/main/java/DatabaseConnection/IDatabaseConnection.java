@@ -1,11 +1,11 @@
 package DatabaseConnection;
 
-import java.sql.SQLException;
+import java.util.List;
+import org.javalite.activejdbc.Model;
 
 public interface IDatabaseConnection {
-  void establishConnection() throws SQLException;
-  String testConnection();
-  Object getServerObject();
-  boolean addDataObject(Object objectToAdd, String tableName);
-  boolean removeServerObject(Object objectToRemove, String tableName);
+  List<Model> getServerObject(Class<? extends Model> model, String queryStatement, Object... searchParameters);
+  List<Model> getServerObject(Class<? extends Model> model);
+  void addDataObject(Class<? extends Model> model, Object... args);
+  void removeServerObject(Class<? extends Model> model, String queryStatement, Object... searchParameters);
 }
