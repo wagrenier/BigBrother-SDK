@@ -27,4 +27,32 @@ public class EtudiantDto {
     public String getCip_etudiant(){
         return this.cip_etudiant;
     }
+
+    public int cote_r(){
+        return this.cote_r;
+    }
+
+    public String nom(){
+        return this.nom;
+    }
+
+    public String prenom(){
+        return this.prenom;
+    }
+
+    public String profil_id(){
+        return this.profil_id;
+    }
+
+    public String programme(){
+        return this.programme;
+    }
+    
+    public String trimestre_id(){
+        return this.trimestre_id;
+    }
+
+    public String unit_id(){
+        return this.unit_id;
+    }
 }
