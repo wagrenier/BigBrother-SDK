@@ -1,9 +1,11 @@
-package DatabaseConnection;
+package DAO;
 
 import org.javalite.activejdbc.Model;
+import org.javalite.activejdbc.annotations.IdName;
 import org.javalite.activejdbc.annotations.Table;
 
 @Table("utilisateur")
+@IdName("cip")
 public class Utilisateur extends Model{
   static {
     validatePresenceOf("cip", "nom", "prenom");

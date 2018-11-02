@@ -79,13 +79,27 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
   }
 
   @Override
-  public boolean addDataObject(Object objectToAdd, String tableName) {
-    return false;
+  public void addDataObject(Class<? extends Model> model, Object... args) {
+
+    Model objectToSave = null;
+    try {
+      objectToSave = model.newInstance();
+    } catch (InstantiationException e) {
+      e.printStackTrace();
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
+    }
+    for(int i = 0; i < args.length; i += 2){
+      objectToSave.set(args[i], args[i + 1]);
+    }
+
+    objectToSave.insert();
+
   }
 
   @Override
-  public boolean removeServerObject(Object objectToRemove, String tableName) {
-    return false;
+  public void removeServerObject(Class<? extends Model> model, String queryStatement, Object... searchParameters) {
+
   }
 
 }
