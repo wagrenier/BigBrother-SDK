@@ -1,7 +1,7 @@
 package Dto;
 
 public class EtudiantDto {
-    public String cipEtudiant;
+    public String CipEtudiant;
     public int cote_r;
     public String nom;
     public String prenom;
@@ -11,9 +11,9 @@ public class EtudiantDto {
     public String unit_id;
 
     // Constructeur
-    public EtudiantDto(String cipEtudiant, int cote_r, String nom, String prenom,
+    public EtudiantDto(String CipEtudiant, int cote_r, String nom, String prenom,
                         String profil_id, String programme, String trimestre_id, String unit_id) {
-        this.cipEtudiant = cipEtudiant;
+        this.CipEtudiant = CipEtudiant;
         this.cote_r = cote_r;
         this.nom = nom;
         this.prenom = prenom;
@@ -23,4 +23,8 @@ public class EtudiantDto {
         this.unit_id = unit_id;
     }
     public EtudiantDto(){ }
+
+    public String getCipEtudiant(){
+        return this.CipEtudiant;
+    }
 }
