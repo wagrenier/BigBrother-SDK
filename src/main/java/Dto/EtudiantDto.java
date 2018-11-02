@@ -28,31 +28,31 @@ public class EtudiantDto {
         return this.cip_etudiant;
     }
 
-    public int cote_r(){
+    public int getCote_r(){
         return this.cote_r;
     }
 
-    public String nom(){
+    public String getNom(){
         return this.nom;
     }
 
-    public String prenom(){
+    public String getPrenom(){
         return this.prenom;
     }
 
-    public String profil_id(){
+    public String getProfil_id(){
         return this.profil_id;
     }
 
-    public String programme(){
+    public String getProgramme(){
         return this.programme;
     }
     
-    public String trimestre_id(){
+    public String getTrimestre_id(){
         return this.trimestre_id;
     }
 
-    public String unit_id(){
+    public String getUnit_id(){
         return this.unit_id;
     }
 }
