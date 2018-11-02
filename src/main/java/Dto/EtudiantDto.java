@@ -6,7 +6,7 @@ public class EtudiantDto {
     public String nom;
     public String prenom;
     public String profil_id;
-    public String programme;
+    public String Programme;
     public String trimestre_id;
     public String unit_id;
 
@@ -18,7 +18,7 @@ public class EtudiantDto {
         this.nom = nom;
         this.prenom = prenom;
         this.profil_id = profil_id;
-        this.programme = programme;
+        this.Programme = programme;
         this.trimestre_id = trimestre_id;
         this.unit_id = unit_id;
     }
