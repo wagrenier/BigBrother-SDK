@@ -22,4 +22,5 @@ public class EtudiantDto {
         this.trimestre_id = trimestre_id;
         this.unit_id = unit_id;
     }
+    public EtudiantDto(){ }
 }
