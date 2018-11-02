@@ -12,4 +12,6 @@ public class ListeGroupeDto {
         this.liste_id = liste_id;
         this.prefixe = prefixe;
     }
+
+    public ListeGroupeDto(){ }
 }

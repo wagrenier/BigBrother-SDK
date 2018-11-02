@@ -22,4 +22,6 @@ public class GroupeDto {
         this.trimestre_id = trimestre_id;
 
     }
+
+    public GroupeDto(){}
 }
