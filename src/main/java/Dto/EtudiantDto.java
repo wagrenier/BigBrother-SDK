@@ -6,7 +6,7 @@ public class EtudiantDto {
     public String nom;
     public String prenom;
     public String profil_id;
-    public String Programme;
+    public String programme;
     public String trimestre_id;
     public String unit_id;
 
@@ -18,7 +18,7 @@ public class EtudiantDto {
         this.nom = nom;
         this.prenom = prenom;
         this.profil_id = profil_id;
-        this.Programme = programme;
+        this.programme = programme;
         this.trimestre_id = trimestre_id;
         this.unit_id = unit_id;
     }
@@ -26,5 +26,9 @@ public class EtudiantDto {
 
     public String getCipEtudiant(){
         return this.CipEtudiant;
+    }
+
+    public String getProgramme(){
+        return this.programme;
     }
 }
