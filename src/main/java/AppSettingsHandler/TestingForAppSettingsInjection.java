@@ -1,5 +1,6 @@
 package AppSettingsHandler;
 
+import DAO.DemandeChangement;
 import DAO.Utilisateur;
 import DatabaseConnection.ConnectionFactory;
 import DAO.Groupe;
@@ -9,10 +10,15 @@ public class TestingForAppSettingsInjection {
 
   public static void main(String[] args){
     POSTGRESQLDatabaseConnection db = ConnectionFactory.getDatabaseConnection();
+    Object groupeId = db.addDataObject(Groupe.class);
 
-    //db.addDataObject(Groupe.class,"id", 123456);
+    System.out.println(groupeId);
 
-    //db.addDataObject(Utilisateur.class, "cip", "wil123", "nom", "BOB", "prenom", "Robert");
+    Object cip = db.addDataObject(Utilisateur.class, "cip", "wil123", "nom", "William", "prenom", "Adam");
+
+    System.out.println(cip);
+
+    db.addDataObject(DemandeChangement.class, "groupe_id", groupeId, "cip", cip);
 
     /*
     List<Model> a = db
@@ -20,6 +26,7 @@ public class TestingForAppSettingsInjection {
 
     for(Model b : a){
       System.out.println(b.toJson(true));
-    }*/
+    }
+    */
   }
 }

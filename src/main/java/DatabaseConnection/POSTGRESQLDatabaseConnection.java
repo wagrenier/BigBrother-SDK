@@ -22,7 +22,6 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
     this.username = (String) this.appSettings.getValue("username");
     this.password = (String) this.appSettings.getValue("password");
     this.dbDriver = (String) this.appSettings.getValue("dbDriver");
-    this.establishConnection();
   }
 
   @Override
@@ -43,7 +42,7 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
   @Override
   public List<Model> getServerObject(Class<? extends Model> model) {
     List<Model> queryReturnValue = null;
-
+    this.establishConnection();
     try {
       queryReturnValue = (List<Model>) model.getMethod("findAll").invoke(null);
     } catch (IllegalAccessException e) {
@@ -52,9 +51,11 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
       e.printStackTrace();
     } catch (NoSuchMethodException e) {
       e.printStackTrace();
+    } catch(Exception e){
+      e.printStackTrace();
     }
 
-
+    this.closeConnection();
     return queryReturnValue;
   }
 
@@ -64,7 +65,7 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
       return this.getServerObject(model);
     }
     List<Model> queryReturnValue = null;
-
+    this.establishConnection();
     try {
       queryReturnValue = (List<Model>) model.getMethod("where", queryStatement.getClass(), searchParameters.getClass()).invoke(null, queryStatement, searchParameters);
     } catch (IllegalAccessException e) {
@@ -73,28 +74,39 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
       e.printStackTrace();
     } catch (NoSuchMethodException e) {
       e.printStackTrace();
+    } catch(Exception e){
+      e.printStackTrace();
     }
-
+    this.closeConnection();
     return queryReturnValue;
   }
 
   @Override
-  public void addDataObject(Class<? extends Model> model, Object... args) {
-
-    Model objectToSave = null;
+  public Object addDataObject(Class<? extends Model> model, Object... args) {
     try {
-      objectToSave = model.newInstance();
+      this.establishConnection();
+
+      Model objectToSave = model.newInstance();
+
+      for(int i = 0; i < args.length; i += 2){
+        objectToSave.set(args[i], args[i + 1]);
+      }
+
+      objectToSave.insert();
+
+      this.closeConnection();
+
+      return objectToSave.getId();
     } catch (InstantiationException e) {
       e.printStackTrace();
     } catch (IllegalAccessException e) {
       e.printStackTrace();
+    } catch(Exception e){
+      e.printStackTrace();
     }
-    for(int i = 0; i < args.length; i += 2){
-      objectToSave.set(args[i], args[i + 1]);
-    }
+    this.closeConnection();
 
-    objectToSave.insert();
-
+    return null;
   }
 
   @Override

@@ -6,6 +6,6 @@ import org.javalite.activejdbc.Model;
 public interface IDatabaseConnection {
   List<Model> getServerObject(Class<? extends Model> model, String queryStatement, Object... searchParameters);
   List<Model> getServerObject(Class<? extends Model> model);
-  void addDataObject(Class<? extends Model> model, Object... args);
+  Object addDataObject(Class<? extends Model> model, Object... args);
   void removeServerObject(Class<? extends Model> model, String queryStatement, Object... searchParameters);
 }
