@@ -1,26 +1,44 @@
 package Dto;
 
-import Dto.EtudiantDto;
-
+/** The type List handler request class dto. */
 public class ListHandlerRequestClassDto {
-    public String sortParameter;
-    public String ap_id;
-    public String app;
-    public int credit_annuaire;
-    public String trimestre_id;
-    public int maxParGroupe;
-    public int RequestedNumberOfGroup;
-    public String prefixe;
-    public EtudiantDto object[];
-    public EtudiantDto group[][];
+  /** The Sort parameter. */
+  public String sortParameter;
+  /** The Ap id. */
+  public String ap_id;
+  /** The App. */
+  public String app;
+  /** The Credit annuaire. */
+  public int credit_annuaire;
+  /** The Trimestre id. */
+  public String trimestre_id;
+  /** The Max par groupe. */
+  public int maxParGroupe;
+  /** The Requested number of group. */
+  public int RequestedNumberOfGroup;
+  /** The Prefixe. */
+  public String prefixe;
+  /** The Object. */
+  public EtudiantDto object[];
+  /** The Group. */
+  public EtudiantDto group[][];
 
-    public ListHandlerRequestClassDto(int maxParGroupe, String prefixe, EtudiantDto object[], int RequestedNumberOfGroup) {
-        this.maxParGroupe = maxParGroupe;
-        this.prefixe = prefixe;
-        this.object = object;
-        this.RequestedNumberOfGroup = RequestedNumberOfGroup;
-    }
+  /**
+   * Instantiates a new List handler request class dto.
+   *
+   * @param maxParGroupe the max par groupe
+   * @param prefixe the prefixe
+   * @param object the object
+   * @param RequestedNumberOfGroup the requested number of group
+   */
+  public ListHandlerRequestClassDto(
+      int maxParGroupe, String prefixe, EtudiantDto object[], int RequestedNumberOfGroup) {
+    this.maxParGroupe = maxParGroupe;
+    this.prefixe = prefixe;
+    this.object = object;
+    this.RequestedNumberOfGroup = RequestedNumberOfGroup;
+  }
 
-    public ListHandlerRequestClassDto(){}
+  /** Instantiates a new List handler request class dto. */
+  public ListHandlerRequestClassDto() {}
 }
-

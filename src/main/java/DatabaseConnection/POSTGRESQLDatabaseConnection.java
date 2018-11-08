@@ -7,16 +7,24 @@ import java.util.List;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.Model;
 
+/** The type Postgresql database connection. */
 public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
 
+  /** The App settings. */
   protected AppSettings appSettings;
+
   private String url;
   private String username;
   private String password;
   private String dbDriver;
 
+  /**
+   * Instantiates a new Postgresql database connection.
+   *
+   * @param appSettings the app settings
+   */
   @Inject
-  public POSTGRESQLDatabaseConnection(AppSettings appSettings){
+  public POSTGRESQLDatabaseConnection(AppSettings appSettings) {
     this.appSettings = appSettings;
     this.url = (String) this.appSettings.getValue("url");
     this.username = (String) this.appSettings.getValue("username");
@@ -25,7 +33,7 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
   }
 
   @Override
-  public void finalize(){
+  public void finalize() {
     this.closeConnection();
   }
 
@@ -35,50 +43,67 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
   }
 
   @Override
-  public void closeConnection(){
+  public void closeConnection() {
     Base.close();
   }
 
   @Override
-  public List<Model> getServerObject(Class<? extends Model> model) {
+  public String getServerObject(Class<? extends Model> model) {
     List<Model> queryReturnValue = null;
     this.establishConnection();
+    String queryReturnJson = null;
+
     try {
       queryReturnValue = (List<Model>) model.getMethod("findAll").invoke(null);
+
+      queryReturnJson = buildReturnJson(queryReturnValue);
     } catch (IllegalAccessException e) {
       e.printStackTrace();
     } catch (InvocationTargetException e) {
       e.printStackTrace();
     } catch (NoSuchMethodException e) {
       e.printStackTrace();
-    } catch(Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
     }
 
     this.closeConnection();
-    return queryReturnValue;
+
+    return queryReturnJson;
   }
 
   @Override
-  public List<Model> getServerObject(Class<? extends Model> model, String queryStatement, Object... searchParameters) {
-    if(searchParameters == null || queryStatement == null){
+  public String getServerObject(
+      Class<? extends Model> model, String queryStatement, Object... searchParameters) {
+    if (searchParameters == null || queryStatement == null) {
       return this.getServerObject(model);
     }
+
     List<Model> queryReturnValue = null;
     this.establishConnection();
+
+    String queryReturnJson = null;
+
     try {
-      queryReturnValue = (List<Model>) model.getMethod("where", queryStatement.getClass(), searchParameters.getClass()).invoke(null, queryStatement, searchParameters);
+      queryReturnValue =
+          (List<Model>)
+              model
+                  .getMethod("where", queryStatement.getClass(), searchParameters.getClass())
+                  .invoke(null, queryStatement, searchParameters);
+
+      queryReturnJson = buildReturnJson(queryReturnValue);
     } catch (IllegalAccessException e) {
       e.printStackTrace();
     } catch (InvocationTargetException e) {
       e.printStackTrace();
     } catch (NoSuchMethodException e) {
       e.printStackTrace();
-    } catch(Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
     }
     this.closeConnection();
-    return queryReturnValue;
+
+    return queryReturnJson;
   }
 
   @Override
@@ -88,7 +113,7 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
 
       Model objectToSave = model.newInstance();
 
-      for(int i = 0; i < args.length; i += 2){
+      for (int i = 0; i < args.length; i += 2) {
         objectToSave.set(args[i], args[i + 1]);
       }
 
@@ -101,7 +126,7 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
       e.printStackTrace();
     } catch (IllegalAccessException e) {
       e.printStackTrace();
-    } catch(Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
     }
     this.closeConnection();
@@ -110,8 +135,16 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
   }
 
   @Override
-  public void removeServerObject(Class<? extends Model> model, String queryStatement, Object... searchParameters) {
+  public void removeServerObject(
+      Class<? extends Model> model, String queryStatement, Object... searchParameters) {}
 
+  private String buildReturnJson(List<Model> queryReturnValue) {
+    StringBuilder returnJson = new StringBuilder();
+
+    for (Model foundObjectFromQuery : queryReturnValue) {
+      returnJson.append(foundObjectFromQuery.toJson(true));
+    }
+
+    return returnJson.toString();
   }
-
 }

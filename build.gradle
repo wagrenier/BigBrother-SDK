@@ -36,10 +36,3 @@ dependencies {
             'org.junit.jupiter:junit-jupiter-engine:5.3.0'
     )
 }
-
-task run(dependsOn: 'build', type: JavaExec) {
-    main = 'AppSettingsHandler.TestingForAppSettingsInjection'
-    classpath = sourceSets.main.runtimeClasspath
-}
-
-
