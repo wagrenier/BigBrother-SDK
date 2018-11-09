@@ -19,10 +19,10 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
   private String dbDriver;
 
   public POSTGRESQLDatabaseConnection() {
-    this.url = (String) this.appSettings.getValue("jdbc:postgresql://bigbrother.c9lba99qgruo.us-east-2.rds.amazonaws.com:5432/testsPhil");
-    this.username = (String) this.appSettings.getValue("bigbrother");
-    this.password = (String) this.appSettings.getValue("bigbrother2018");
-    this.dbDriver = (String) this.appSettings.getValue("org.postgresql.Driver");
+    this.url = "jdbc:postgresql://bigbrother.c9lba99qgruo.us-east-2.rds.amazonaws.com:5432/testsPhil";
+    this.username = "bigbrother";
+    this.password = "bigbrother2018";
+    this.dbDriver = "org.postgresql.Driver";
   }
 
   @Override
