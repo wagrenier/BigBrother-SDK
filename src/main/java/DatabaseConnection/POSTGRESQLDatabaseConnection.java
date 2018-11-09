@@ -18,14 +18,7 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
   private String password;
   private String dbDriver;
 
-  /**
-   * Instantiates a new Postgresql database connection.
-   *
-   * @param appSettings the app settings
-   */
-  @Inject
-  public POSTGRESQLDatabaseConnection(AppSettings appSettings) {
-    this.appSettings = appSettings;
+  public POSTGRESQLDatabaseConnection() {
     this.url = (String) this.appSettings.getValue("jdbc:postgresql://bigbrother.c9lba99qgruo.us-east-2.rds.amazonaws.com:5432/testsPhil");
     this.username = (String) this.appSettings.getValue("bigbrother");
     this.password = (String) this.appSettings.getValue("bigbrother2018");
