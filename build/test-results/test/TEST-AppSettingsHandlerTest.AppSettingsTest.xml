@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="AppSettingsHandlerTest.AppSettingsTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-11-09T03:52:44" hostname="Etiennes-MBP" time="0.783">
+<testsuite name="AppSettingsHandlerTest.AppSettingsTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-11-09T04:10:01" hostname="Etiennes-MBP" time="1.019">
   <properties/>
-  <testcase name="WhenAppSettingsReturnsAppSettingsAsFileNameWhenGetFileNameIsCalled()" classname="AppSettingsHandlerTest.AppSettingsTest" time="0.783"/>
+  <testcase name="WhenAppSettingsReturnsAppSettingsAsFileNameWhenGetFileNameIsCalled()" classname="AppSettingsHandlerTest.AppSettingsTest" time="1.019"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
