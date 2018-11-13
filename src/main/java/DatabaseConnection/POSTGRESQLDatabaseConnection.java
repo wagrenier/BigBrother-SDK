@@ -18,6 +18,15 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
   private String password;
   private String dbDriver;
 
+  @Inject
+  public POSTGRESQLDatabaseConnection(AppSettings appSettings){
+    this.appSettings = appSettings;
+    this.url = (String) this.appSettings.getValue("url");
+    this.username = (String) this.appSettings.getValue("username");
+    this.password = (String) this.appSettings.getValue("password");
+    this.dbDriver = (String) this.appSettings.getValue("dbDriver");
+  }
+
   public POSTGRESQLDatabaseConnection() {
     this.url = "jdbc:postgresql://bigbrother.c9lba99qgruo.us-east-2.rds.amazonaws.com:5432/testsPhil";
     this.username = "bigbrother";
@@ -129,7 +138,28 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
 
   @Override
   public void removeServerObject(
-      Class<? extends Model> model, String queryStatement, Object... searchParameters) {}
+      Class<? extends Model> model, String queryStatement, Object... searchParameters) {
+
+    this.establishConnection();
+
+    try {
+      Model foundModel = (Model) model.getMethod("findFirst",
+          String.class, Object[].class).invoke(null, queryStatement, searchParameters);
+
+      if(foundModel != null){
+        foundModel.delete();
+      }
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+    } catch (NoSuchMethodException e) {
+      e.printStackTrace();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    this.closeConnection();
+  }
 
   private String buildReturnJson(List<Model> queryReturnValue) {
     StringBuilder returnJson = new StringBuilder();
