@@ -115,8 +115,6 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
 
       objectToSave.insert();
 
-      this.closeConnection();
-
       return objectToSave.getId();
     } catch (InstantiationException e) {
       e.printStackTrace();
