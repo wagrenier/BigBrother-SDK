@@ -52,7 +52,6 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
   @Override
   public String getServerObject(Class<? extends Model> model) {
     List<Model> queryReturnValue = null;
-    this.establishConnection();
     String queryReturnJson = null;
 
     try {
@@ -69,8 +68,6 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
       e.printStackTrace();
     }
 
-    this.closeConnection();
-
     return queryReturnJson;
   }
 
@@ -82,7 +79,6 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
     }
 
     List<Model> queryReturnValue = null;
-    this.establishConnection();
 
     String queryReturnJson = null;
 
@@ -103,7 +99,6 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    this.closeConnection();
 
     return queryReturnJson;
   }
@@ -111,7 +106,6 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
   @Override
   public Object addDataObject(Class<? extends Model> model, Object... args) {
     try {
-      this.establishConnection();
 
       Model objectToSave = model.newInstance();
 
@@ -131,16 +125,12 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    this.closeConnection();
-
     return null;
   }
 
   @Override
   public void removeServerObject(
       Class<? extends Model> model, String queryStatement, Object... searchParameters) {
-
-    this.establishConnection();
 
     try {
       Model foundModel = (Model) model.getMethod("findFirst",
@@ -158,7 +148,6 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    this.closeConnection();
   }
 
   private String buildReturnJson(List<Model> queryReturnValue) {
