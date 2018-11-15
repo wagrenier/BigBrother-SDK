@@ -151,10 +151,14 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
   private String buildReturnJson(List<Model> queryReturnValue) {
     StringBuilder returnJson = new StringBuilder();
 
+    returnJson.append("[\n");
     for (Model foundObjectFromQuery : queryReturnValue) {
       returnJson.append(foundObjectFromQuery.toJson(true));
-    }
 
+      returnJson.append(",\n");
+    }
+    returnJson.deleteCharAt(returnJson.lastIndexOf(","));
+    returnJson.append("]");
     return returnJson.toString();
   }
 }
