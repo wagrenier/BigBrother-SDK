@@ -140,6 +140,10 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
       String[] objectPropertiesNames,
       Object[][] objectPropertiesValues) {
 
+    if(model == null || objectPropertiesNames == null || objectPropertiesValues == null){
+      return false;
+    }
+
     try {
 
       String queryStatement = this.buildBatchInsertStatement(model, objectPropertiesNames);
