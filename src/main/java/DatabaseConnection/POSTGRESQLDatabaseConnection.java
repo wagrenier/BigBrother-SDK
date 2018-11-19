@@ -3,6 +3,7 @@ package DatabaseConnection;
 import AppSettingsHandler.AppSettings;
 import com.google.inject.Inject;
 import java.lang.reflect.InvocationTargetException;
+import java.sql.PreparedStatement;
 import java.util.List;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.Model;
@@ -18,8 +19,13 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
   private String password;
   private String dbDriver;
 
+  /**
+   * Instantiates a new Postgresql database connection.
+   *
+   * @param appSettings the app settings
+   */
   @Inject
-  public POSTGRESQLDatabaseConnection(AppSettings appSettings){
+  public POSTGRESQLDatabaseConnection(AppSettings appSettings) {
     this.appSettings = appSettings;
     this.url = (String) this.appSettings.getValue("url");
     this.username = (String) this.appSettings.getValue("username");
@@ -27,8 +33,10 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
     this.dbDriver = (String) this.appSettings.getValue("dbDriver");
   }
 
+  /** Instantiates a new Postgresql database connection. */
   public POSTGRESQLDatabaseConnection() {
-    this.url = "jdbc:postgresql://bigbrother.c9lba99qgruo.us-east-2.rds.amazonaws.com:5432/testsPhil";
+    this.url =
+        "jdbc:postgresql://bigbrother.c9lba99qgruo.us-east-2.rds.amazonaws.com:5432/testsPhil";
     this.username = "bigbrother";
     this.password = "bigbrother2018";
     this.dbDriver = "org.postgresql.Driver";
@@ -127,14 +135,43 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
   }
 
   @Override
+  public boolean addDataObjectBatch(
+      Class<? extends Model> model,
+      String[] objectPropertiesNames,
+      Object[][] objectPropertiesValues) {
+
+    try {
+
+      String queryStatement = this.buildBatchInsertStatement(model, objectPropertiesNames);
+
+      PreparedStatement batchStatement = Base.startBatch(queryStatement);
+
+      for (Object[] personToInsert : objectPropertiesValues) {
+        Base.addBatch(batchStatement, personToInsert);
+      }
+
+      Base.executeBatch(batchStatement);
+      batchStatement.close();
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    }
+
+    return true;
+  }
+
+  @Override
   public void removeServerObject(
       Class<? extends Model> model, String queryStatement, Object... searchParameters) {
 
     try {
-      Model foundModel = (Model) model.getMethod("findFirst",
-          String.class, Object[].class).invoke(null, queryStatement, searchParameters);
+      Model foundModel =
+          (Model)
+              model
+                  .getMethod("findFirst", String.class, Object[].class)
+                  .invoke(null, queryStatement, searchParameters);
 
-      if(foundModel != null){
+      if (foundModel != null) {
         foundModel.delete();
       }
     } catch (IllegalAccessException e) {
@@ -146,6 +183,47 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+
+  private String buildBatchInsertStatement(
+      Class<? extends Model> model, String[] objectPropertiesNames) {
+
+    // A typical batch insert request
+    // "insert into TABLENAME (PROPERTY!, PROPERTY2) values(?, ?, ?)"
+
+    try {
+
+      StringBuilder queryBuilder = new StringBuilder();
+      StringBuilder valuesBuilder = new StringBuilder();
+
+      queryBuilder.append("insert into ");
+
+      String tableName = (String) model.getMethod("getTableName").invoke(null);
+      queryBuilder.append(tableName);
+
+      queryBuilder.append(" (");
+
+      for (String property : objectPropertiesNames) {
+        queryBuilder.append(property);
+        queryBuilder.append(", ");
+        valuesBuilder.append("?, ");
+      }
+
+      queryBuilder.deleteCharAt(queryBuilder.lastIndexOf(", "));
+      queryBuilder.append(") values(");
+
+      valuesBuilder.deleteCharAt(valuesBuilder.lastIndexOf(", "));
+      valuesBuilder.append(")");
+
+      queryBuilder.append(valuesBuilder.toString());
+
+      return queryBuilder.toString();
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    return null;
   }
 
   private String buildReturnJson(List<Model> queryReturnValue) {

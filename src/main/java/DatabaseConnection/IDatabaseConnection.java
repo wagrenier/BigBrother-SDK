@@ -32,6 +32,9 @@ public interface IDatabaseConnection {
    */
   Object addDataObject(Class<? extends Model> model, Object... args);
 
+
+  boolean addDataObjectBatch(Class<? extends Model> model, String[] objectPropertiesNames, Object[][] objectPropertiesValues);
+
   /**
    * Remove server object.
    *
