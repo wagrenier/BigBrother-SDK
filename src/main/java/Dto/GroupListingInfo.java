@@ -5,17 +5,19 @@ public class GroupListingInfo {
   public String trimestre_id = "";
   public int nombreGroupe = 0;
   public int nombreLimit = 0;
+  public String prefix = "";
   public int groupId;
 
   protected GroupListingInfo(){
 
   }
 
-  public GroupListingInfo(String activite, String trimestre_id, int nombreGroupe, int nombreLimit, int groupId) {
+  public GroupListingInfo(String activite, String trimestre_id, int nombreGroupe, int nombreLimit, int groupId, String prefix) {
     this.activite = activite;
     this.trimestre_id = trimestre_id;
     this.nombreGroupe = nombreGroupe;
     this.nombreLimit = nombreLimit;
     this.groupId = groupId;
+    this.prefix = prefix;
   }
 }
