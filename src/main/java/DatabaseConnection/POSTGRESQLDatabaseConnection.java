@@ -118,9 +118,7 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
       Model objectToSave = model.newInstance();
 
       for (int i = 0; i < args.length; i += 2) {
-		byte[] latin1 = args[i + 1].toString().getBytes("ISO-8859-1");
-
-        objectToSave.set(args[i], new String(latin1));
+        objectToSave.set(args[i], args[i + 1]);
       }
 
       objectToSave.insert();
