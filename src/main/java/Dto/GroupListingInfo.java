@@ -4,7 +4,7 @@ public class GroupListingInfo {
   public String activite = "";
   public String trimestre_id = "";
   public int nombreGroupe = 0;
-  public int nombreLimit = 0;
+  public int max_par_groupe = 0;
   public String prefixe = "";
   public int groupId;
 
@@ -12,11 +12,11 @@ public class GroupListingInfo {
 
   }
 
-  public GroupListingInfo(String activite, String trimestre_id, int nombreGroupe, int nombreLimit, int groupId, String prefixe) {
+  public GroupListingInfo(String activite, String trimestre_id, int nombreGroupe, int max_par_groupe, int groupId, String prefixe) {
     this.activite = activite;
     this.trimestre_id = trimestre_id;
     this.nombreGroupe = nombreGroupe;
-    this.nombreLimit = nombreLimit;
+    this.max_par_groupe = max_par_groupe;
     this.groupId = groupId;
     this.prefixe = prefixe;
   }
