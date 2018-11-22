@@ -20,6 +20,8 @@ public class GroupeDto {
   public String trimestre_id;
   /** The Create_By CIP. */
   public String created_by;
+  /** The Max_Par_Group **/
+  public int max_par_group;
 
   /**
    * Instantiates a new Groupe dto.
@@ -32,6 +34,7 @@ public class GroupeDto {
    * @param prefixe the prefixe
    * @param trimestre_id the trimestre id
    * @param created_by the cip
+   * @param max_par_group the cip
    */
   // Constructeur
   public GroupeDto(
@@ -42,7 +45,8 @@ public class GroupeDto {
       int groupe_id,
       String prefixe,
       String trimestre_id,
-      String created_by) {
+      String created_by,
+      int max_par_group) {
     this.ap_id = ap_id;
     this.app = app;
     this.credit_annuaire = credit_annuaire;
@@ -51,6 +55,7 @@ public class GroupeDto {
     this.prefixe = prefixe;
     this.trimestre_id = trimestre_id;
     this.created_by = created_by;
+    this.max_par_group = max_par_group;
   }
 
   /** Instantiates a new Groupe dto. */
