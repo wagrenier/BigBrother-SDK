@@ -3,7 +3,7 @@ package Dto;
 public class GroupListingInfo {
   public String activite = "";
   public String trimestre_id = "";
-  public int nombreGroupe = 0;
+  public int nombreGroupe = 1;
   public int max_par_groupe = 0;
   public String prefixe = "";
   public int groupId;
