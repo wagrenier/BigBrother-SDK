@@ -1,14 +1,14 @@
 How to use:
 1. Import repo into project
     >1.1 In the dependencies, use:
-        `compile 'com.gitlab.CheesyBurrito:bigbrother-sdk:master-SNAPSHOT'`
-    1.2 In the repositories add:
+      >>  `compile 'com.gitlab.CheesyBurrito:bigbrother-sdk:master-SNAPSHOT'`
+    >1.2 In the repositories add:
         `maven{
             url "https://jitpack.io"
             credentials { username authToken}
         }`
-    1.3 Uses jitpack to dynamically compile into your project
-        [https://jitpack.io/]
+    >1.3 Uses jitpack to dynamically compile into your project
+        >>Jitpack's website: [https://jitpack.io/]
 2. Use AppSettings
     >2.1 Put instructions here
 3. Access Your Database
