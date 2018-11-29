@@ -1,4 +1,4 @@
-# How to use:
+# How to use
 ## A- Import repo into project
 1. In the dependencies, add:
     `compile 'com.gitlab.CheesyBurrito:bigbrother-sdk:master-SNAPSHOT'`
