@@ -27,13 +27,15 @@ public class ListHandlerRequestClassDto {
    * Instantiates a new List handler request class dto.
    *
    * @param maxParGroupe the max par groupe
+   * @param sortParameter the sort parameter
    * @param prefixe the prefixe
    * @param object the object
    * @param RequestedNumberOfGroup the requested number of group
    */
   public ListHandlerRequestClassDto(
-      int maxParGroupe, String prefixe, EtudiantDto object[], int RequestedNumberOfGroup) {
+      int maxParGroupe, String sortParameter, String prefixe, EtudiantDto object[], int RequestedNumberOfGroup) {
     this.maxParGroupe = maxParGroupe;
+    this.sortParameter = sortParameter;
     this.prefixe = prefixe;
     this.object = object;
     this.RequestedNumberOfGroup = RequestedNumberOfGroup;
