@@ -58,17 +58,20 @@ public class JsonReader implements IFileReader {
 
   @Override
   public Object getValue(Map objectStream, Object key) {
-    if (key == null) {
+    if (key == null || objectStream == null) {
       return null;
     }
-
     return objectStream.get(key);
   }
 
   @Override
-  public JSONObject openFile(String Path) {
+  public JSONObject openFile(String path) {
+    if(path == null){
+      return null;
+    }
+
     try {
-      fileReader = new FileReader(Path);
+      fileReader = new FileReader(path);
     } catch (FileNotFoundException e) {
       e.printStackTrace();
       return null;

@@ -46,4 +46,13 @@ public class AppSettingsTest {
         actual), "AppSettings", actual);
   }
 
+  @Test
+  @DisplayName("AppSettings Return Value When Called")
+  void AppSettingsReturnValueWhenCalled() {
+    // Act & Assert
+    String actual = (String) this.target.getValue("DummyValue");
+    Assert.assertEquals(String.format("AppSettings was the expected value, but instead was %s",
+            actual), "AppSettingsTest", actual);
+  }
+
 }
