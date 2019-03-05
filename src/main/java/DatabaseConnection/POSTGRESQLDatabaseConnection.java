@@ -33,15 +33,6 @@ public class POSTGRESQLDatabaseConnection extends DataBaseConnectionAbstract {
     this.dbDriver = (String) this.appSettings.getValue("dbDriver");
   }
 
-  /** Instantiates a new Postgresql database connection. */
-  public POSTGRESQLDatabaseConnection() {
-    this.url =
-        "jdbc:postgresql://bigbrother.c9lba99qgruo.us-east-2.rds.amazonaws.com:5432/testsPhil";
-    this.username = "bigbrother";
-    this.password = "bigbrother2018";
-    this.dbDriver = "org.postgresql.Driver";
-  }
-
   @Override
   public void finalize() {
     this.closeConnection();
